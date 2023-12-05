@@ -1,0 +1,6 @@
+---
+# handlers file for role_ansible
+- name: Restart Service
+  systemd:
+    name: nginx
+    state: restarted

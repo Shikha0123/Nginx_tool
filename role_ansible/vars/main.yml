@@ -1,0 +1,8 @@
+---
+# vars file for role_ansible
+software_packages:
+  - nginx
+
+
+page_title: "Tool Evaluation"
+page_description: "Nginx Creator Igor Sysoev"

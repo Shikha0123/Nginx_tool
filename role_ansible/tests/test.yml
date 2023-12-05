@@ -1,0 +1,6 @@
+---
+- name: Your playbook name
+  hosts: all
+  become: true
+  roles:
+   - role_ansible

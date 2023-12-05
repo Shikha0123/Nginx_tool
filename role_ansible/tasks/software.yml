@@ -1,0 +1,62 @@
+---
+- name: Install software packages in Debian
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ software_packages }}"
+  when: ansible_os_family == "Debian" #ubuntu
+  tags:
+    - install
+    - never
+
+- name: Uninstall software packages in Debian
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ software_packages }}"
+  when: ansible_os_family == "Debian"
+  tags: uninstall
+
+- name: Start service if not started 
+  service:
+    name: "{{ item }}"
+    state: started
+  with_items: "{{ software_packages }}"
+  tags: started
+
+- name: Stop service if started 
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: stopped
+  with_items: "{{ software_packages }}"
+  tags: stopped
+
+- name: Restart service, in all cases
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: restarted
+  with_items: "{{ software_packages }}"
+  tags: restarted
+
+- name: Install software packages in RedHat
+  yum:
+    update_cache: yes
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ software_packages }}"
+  when: ansible_os_family == "RedHat"
+  tags: 
+    - install
+    - never
+
+
+- name: Uninstall software packages in RedHat
+  yum:
+    update_cache: yes
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ software_packages }}"
+  when: ansible_os_family == "RedHat"
+  tags: uninstall
