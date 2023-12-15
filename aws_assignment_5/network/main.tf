@@ -117,8 +117,8 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
   peer_region = "us-east-1"
 
   # VPC IDs for the two VPCs involved in peering
-  vpc_id        = aws_vpc.vpc_us_east_1.id
-  peer_vpc_id   = aws_vpc.vpc_us_east_2.id
+  vpc_id        = aws_vpc.vpc_us_east_2.id
+  peer_vpc_id   = aws_vpc.vpc_us_east_1.id
 
   # Other peering connection configurations go here
 }
