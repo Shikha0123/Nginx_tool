@@ -107,6 +107,7 @@ resource "aws_route_table_association" "private" {
 resource "aws_vpc_peering_connection" "vpc_peering" {
   vpc_id          = "vpc-08aaf997c798d67a0"
   peer_vpc_id     = aws_vpc.tem_vpc.id
+  peer_region   = "us-east-1"
   auto_accept     = true
 
   tags = {
