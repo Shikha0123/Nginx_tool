@@ -73,6 +73,7 @@ resource "aws_route_table" "public" {
   tags = {
     Name = var.public_route_table_names
   }
+depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
 
 resource "aws_route_table" "private" {
@@ -88,6 +89,7 @@ resource "aws_route_table" "private" {
   tags = {
     Name = var.private_route_table_names
   }
+depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
 
 #aws_route_table_association
@@ -100,4 +102,19 @@ resource "aws_route_table_association" "private" {
   count = length(var.private_subnet_names)
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
+}
+resource "aws_vpc_peering_connection" "vpc_peering" {
+  vpc_id          = "vpc-0149ec820fb077af3"
+  peer_vpc_id     = aws_vpc.test_vpc.id
+  auto_accept     = true
+
+  tags = {
+    Name = "VPC-Peering"
+  }
+}
+resource "aws_route" "Existing_route" {
+  route_table_id            = "rtb-01e92e88403e191d1"  
+  destination_cidr_block    = var.vpc_cidr 
+  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+  depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
