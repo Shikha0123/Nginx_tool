@@ -108,7 +108,7 @@ provider "aws" {
 
 resource "aws_vpc" "vpc_us_east_1" {
   # Configuration for VPC in us-east-2
-  cidr_block = "10.100.2.0/16"
+  cidr_block = "10.200.0.0/16"
   # Other VPC configurations go here
 }
 
