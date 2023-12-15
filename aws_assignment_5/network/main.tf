@@ -73,7 +73,6 @@ resource "aws_route_table" "public" {
   tags = {
     Name = var.public_route_table_names
   }
-depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
 
 resource "aws_route_table" "private" {
@@ -89,7 +88,6 @@ resource "aws_route_table" "private" {
   tags = {
     Name = var.private_route_table_names
   }
-depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
 
 #aws_route_table_association
