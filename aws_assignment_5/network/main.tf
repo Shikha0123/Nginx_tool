@@ -115,7 +115,7 @@ resource "aws_route_table_association" "private" {
 #VPC Peering 
 
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  vpc_id          = "vpc-08aaf997c798d67a0"
+  vpc_id          = "vpc-vpc-0a74829ca84ceb3d1"
   peer_vpc_id     = aws_vpc.tem_vpc.id
   auto_accept     = true
 
