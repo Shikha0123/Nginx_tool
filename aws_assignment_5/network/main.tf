@@ -110,10 +110,4 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
   depends_on = [aws_vpc.tem_vpc]  # Ensure that VPC is created before attempting peering connection
 }
 
-resource "aws_vpc_peering_connection" "vpc_peering" {
-  count           = var.create_vpc_peering ? 1 : 0
-  vpc_id          = "vpc-08aaf997c798d67a0"
-  peer_vpc_id     = aws_vpc.tem_vpc.id
-  peer_region     = "us-east-1"
-  auto_accept     = true
-}
+
