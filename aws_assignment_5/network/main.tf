@@ -70,9 +70,15 @@ resource "aws_route_table" "public" {
     cidr_block = var.vpc_cidr
     gateway_id = "local"
   }
+route {
+    cidr_block = "172.31.0.0/16"
+    vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+  }
   tags = {
     Name = var.public_route_table_names
   }
+  
+  depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
 
 resource "aws_route_table" "private" {
@@ -85,9 +91,14 @@ resource "aws_route_table" "private" {
     cidr_block = var.vpc_cidr
     gateway_id = "local"
   }
+route {
+    cidr_block = "172.31.0.0/16"
+    vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+  }
   tags = {
     Name = var.private_route_table_names
   }
+depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
 
 #aws_route_table_association
@@ -101,24 +112,21 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
-provider "aws" {
-  alias  = "us_east_2"
-  region = "us-east-2"
-}
-
-resource "aws_vpc" "vpc_us_east_1" {
-  # Configuration for VPC in us-east-2
-  cidr_block = "10.200.0.0/16"
-  # Other VPC configurations go here
-}
+#VPC Peering 
 
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  auto_accept = true
-  peer_region = "us-east-1"
+  vpc_id          = "vpc-08aaf997c798d67a0"
+  peer_vpc_id     = aws_vpc.test_vpc.id
+  auto_accept     = true
 
-  # VPC IDs for the two VPCs involved in peering
-  vpc_id        = aws_vpc.vpc_us_east_2.id
-  peer_vpc_id   = aws_vpc.vpc_us_east_1.id
+  tags = {
+    Name = "VPC-Peering"
+  }
+}
 
-  # Other peering connection configurations go here
+resource "aws_route" "Existing_route" {
+  route_table_id            = "rtb-00547ce2d41afbcd9"  
+  destination_cidr_block    = var.vpc_cidr 
+  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+  depends_on = [ aws_vpc_peering_connection.vpc_peering ]
 }
