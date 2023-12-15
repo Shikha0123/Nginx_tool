@@ -103,23 +103,19 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
-
 resource "aws_vpc_peering_connection" "vpc_peering" {
   vpc_id          = "vpc-08aaf997c798d67a0"
   peer_vpc_id     = aws_vpc.tem_vpc.id
-  peer_region   = "us-east-1"
+  peer_region     = "us-east-1"
   auto_accept     = true
 
-  tags = {
-    Name = "VPC-Peering"
-  }
+  depends_on = [aws_vpc.tem_vpc]  # Ensure that VPC is created before attempting peering connection
 }
 
-resource "aws_route" "Existing_route" {
-  route_table_id            = "rtb-00547ce2d41afbcd9"  
-  destination_cidr_block    = var.vpc_cidr 
-  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
-  depends_on = [ aws_vpc_peering_connection.vpc_peering ]
+resource "aws_vpc_peering_connection" "vpc_peering" {
+  count           = var.create_vpc_peering ? 1 : 0
+  vpc_id          = "vpc-08aaf997c798d67a0"
+  peer_vpc_id     = aws_vpc.tem_vpc.id
+  peer_region     = "us-east-1"
+  auto_accept     = true
 }
-
-
