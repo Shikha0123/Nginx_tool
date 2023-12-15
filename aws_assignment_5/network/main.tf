@@ -101,8 +101,24 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
+provider "aws" {
+  alias  = "us_east_2"
+  region = "us-east-2"
+}
+
+resource "aws_vpc" "vpc_us_east_1" {
+  # Configuration for VPC in us-east-2
+  cidr_block = "10.0.2.0/16"
+  # Other VPC configurations go here
+}
+
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  auto_accept   = true
-  peer_vpc_id   = "vpc-09ce61e6b184cab91"
-  vpc_id        = "vpc-08aaf997c798d67a0"
+  auto_accept = true
+  peer_region = "us-east-1"
+
+  # VPC IDs for the two VPCs involved in peering
+  vpc_id        = aws_vpc.vpc_us_east_2.id
+  peer_vpc_id   = aws_vpc.vpc_us_east_1.id
+
+  # Other peering connection configurations go here
 }
