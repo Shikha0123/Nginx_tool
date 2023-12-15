@@ -13,7 +13,7 @@ resource "aws_subnet" "public" {
   count = length(var.public_subnet_names)
   vpc_id = aws_vpc.tem_vpc.id
   cidr_block = var.pub_cidr[count.index]
-  availability_zone = "us-east-2${element(["a", "c"], count.index % 2)}"
+  availability_zone = "us-east-1${element(["a", "c"], count.index % 2)}"
   tags = {
     Name = var.public_subnet_names[count.index]
   }
@@ -23,7 +23,7 @@ resource "aws_subnet" "private" {
   count = length(var.private_subnet_names)
   vpc_id = aws_vpc.tem_vpc.id
   cidr_block = var.pv_cidr[count.index]
-  availability_zone = "us-east-2${element(["a", "c"], count.index % 2)}"
+  availability_zone = "us-east-1${element(["a", "c"], count.index % 2)}"
 
   tags = {
     Name = var.private_subnet_names[count.index]
