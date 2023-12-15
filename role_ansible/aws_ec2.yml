@@ -1,7 +1,7 @@
 ---
 plugin: aws_ec2
 regions:
-  - us-east-2
+  - us-east-1
 filters:
     instance-state-code: 16
 keyed_groups:
