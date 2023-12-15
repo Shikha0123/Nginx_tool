@@ -102,12 +102,7 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 resource "aws_vpc_peering_connection" "vpc_peering" {
+  auto_accept   = true
   peer_vpc_id   = "vpc-09ce61e6b184cab91"
   vpc_id        = "vpc-08aaf997c798d67a0"
-  peer_region     = "us-east-1"
-  auto_accept     = true
-
-  depends_on = [aws_vpc.tem_vpc]  # Ensure that VPC is created before attempting peering connection
 }
-
-
