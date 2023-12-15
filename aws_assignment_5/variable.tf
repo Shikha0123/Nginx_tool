@@ -60,4 +60,5 @@ variable "seqgrp" {
 }
 variable "keyname" {
   type = string
+  default = "ninja.pem"
 }
