@@ -6,7 +6,9 @@
     state: present
   with_items: "{{ software_packages }}"
   when: ansible_os_family == "Debian" #ubuntu
-
+   tags: 
+    - install
+    
 - name: Uninstall software packages in Debian
   apt:
     update_cache: yes
@@ -14,7 +16,10 @@
     state: absent
   with_items: "{{ software_packages }}"
   when: ansible_os_family == "Debian"
-  tags: uninstall
+  tags: 
+    - uninstall
+    - never
+
 
 - name: Start service if not started 
   service:
@@ -46,7 +51,7 @@
   when: ansible_os_family == "RedHat"
   tags: 
     - install
-    - never
+   
 
 
 - name: Uninstall software packages in RedHat
@@ -56,4 +61,6 @@
     state: absent
   with_items: "{{ software_packages }}"
   when: ansible_os_family == "RedHat"
-  tags: uninstall
+  tags: 
+    - uninstall
+    - never
