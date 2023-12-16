@@ -1,0 +1,13 @@
+                                       
+---
+plugin: aws_ec2
+regions:
+  - us-east-1
+# hostnames:
+#   - ip-address
+include_filters:
+# This includes everything in the inventory that has the following tags.
+# - tag:DB:   #Format Multiple Tags Use.
+#     - 'pg'
+- tag:NAME:   
+    - 'private-instance'
