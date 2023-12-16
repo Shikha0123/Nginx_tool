@@ -6,8 +6,6 @@
     state: present
   with_items: "{{ software_packages }}"
   when: ansible_os_family == "Debian" #ubuntu
-  tags:
-    - install
 
 - name: Uninstall software packages in Debian
   apt:
