@@ -1,6 +1,1 @@
-- name: Configure Software
-  template:
-    src: /home/ubuntu/role_ansible/templates/main.j2
-    dest: /var/www/html/index.nginx-debian.html
-  notify: Restart Service
 
