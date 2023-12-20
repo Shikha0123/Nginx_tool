@@ -1,21 +1,21 @@
-
-- name: Install or uninstall software packages
-  package:
-    name: "{{ item }}"
-    state: "{{ software_package_state | default('present') }}"
-  with_items: "{{ software_packages }}"
-  tags: 
-    - install
-    - uninstall
-    - never
-
-- name: Manage service state
-  systemd:
-    name: "{{ item }}"
-    state: "{{ software_service_state }}"
-  with_items: "{{ software_services }}"
-  when: software_services is defined
-  tags: 
-    - started
-    - stopped
-    - restarted
+ - name: Install Nginx on Debian (e.g., Ubuntu)
+      package:
+        name:
+        state: present
+      when: ansible_os_family == 'Debian'
+      tags:
+        - install_software
+    
+    - name: Install Nginx on RedHat
+      package:
+        name: 
+        state: present
+      when: ansible_os_family == 'RedHat'
+      tags:
+        - install_software
+        
+    - name: Allow all access to tcp port 80
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
