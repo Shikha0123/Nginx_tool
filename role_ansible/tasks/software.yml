@@ -1,21 +1,34 @@
- - name: Install Nginx on Debian (e.g., Ubuntu)
-      package:
-        name:
-        state: present
-      when: ansible_os_family == 'Debian'
-      tags:
-        - install_software
-    
-    - name: Install Nginx on RedHat
-      package:
-        name: 
-        state: present
-      when: ansible_os_family == 'RedHat'
-      tags:
-        - install_software
-        
-    - name: Allow all access to tcp port 80
-      ufw:
-        rule: allow
-        port: '80'
-        proto: tcp
+---
+- name: Set page title and description
+  set_fact:
+    page_title: "My Landing Page"
+    page_description: "This is my landing page description."
+
+- name: Install Nginx on Debian (e.g., Ubuntu)
+  package:
+    name: nginx
+    state: present
+  when: ansible_os_family == 'Debian'
+  tags:
+    - install_software
+
+- name: Install Nginx on RedHat
+  package:
+    name: nginx
+    state: present
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - install_software
+
+- name: Configure Software
+  template:
+    src: templates/main.j2  # Use the correct path, either absolute or relative to the playbook
+    dest: /var/www/html/index.nginx-debian.html
+  notify: Restart Service
+
+- name: Allow all access to tcp port 80
+  ufw:
+    rule: allow
+    port: '80'
+
+                   
