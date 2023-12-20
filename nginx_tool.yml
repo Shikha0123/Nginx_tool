@@ -1,8 +1,6 @@
-- hosts: all
-  gather_facts: true
+---
+- name: Install Nginx
+  hosts: all
   become: true
-  become_user: ubuntu
-  tasks:
-    # Your tasks here
-  vars:
-    ansible_ssh_private_key_file: /var/lib/jenkins/workspace/terraform_ansible_job/ninja.pem
+  roles:
+   - role_ansible
