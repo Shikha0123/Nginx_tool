@@ -1,4 +1,4 @@
 ---
  #tasks file for role_ansible
  - include_tasks: software.yml
- - include_tasks: nginx.yml
+ 
