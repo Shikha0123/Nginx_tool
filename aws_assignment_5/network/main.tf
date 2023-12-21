@@ -115,7 +115,7 @@ resource "aws_route_table_association" "private" {
 #VPC Peering 
 
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  vpc_id          = "vpc-08aaf997c798d67a0"
+  vpc_id          = "vpc-093f1f4ca60f739df"
   peer_vpc_id     = aws_vpc.tem_vpc.id
   auto_accept     = true
 
@@ -125,7 +125,7 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
 }
 
 resource "aws_route" "Existing_route" {
-  route_table_id            = "rtb-00547ce2d41afbcd9"  
+  route_table_id            = "rtb-022f664fa430f5c32"  
   destination_cidr_block    = var.vpc_cidr 
   vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
   depends_on = [ aws_vpc_peering_connection.vpc_peering ]
