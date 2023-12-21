@@ -12,7 +12,7 @@ terraform {
 
   backend "s3" {
 
-    bucket         = "tripathibucket"
+    bucket         = "adityabucket63"
 
     key            = "Assignment/terraform.tfstate"
 
